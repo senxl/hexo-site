@@ -33,11 +33,12 @@
   mashiro_option.email_name = "";
   mashiro_option.cookie_version_control = "";
   mashiro_option.qzone_autocomplete = false;
-  mashiro_option.site_name = "さくら荘その咏晴小柳";
+  mashiro_option.site_name = "さくら荘の咏晴小柳";
   mashiro_option.author_name = "";
   mashiro_option.site_url = "https://senxl.github.io/hexo-site/";
-  mashiro_option.v_appId = "dOHu4Kv2B6vjECPwdMFneLrb-gzGzoHsz";
-  mashiro_option.v_appKey = "hUxDmIOri9gEFhWYhVtOQSnR";
+  mashiro_option.utterances_repo = "senxl/hexo-site";
+  mashiro_option.utterances_issue_term = "pathname";
+  mashiro_option.utterances_theme = "github-light";
   mashiro_option.mathjax = "0";
   mashiro_option.qq_api_url = "https://api.mashiro.top/qqinfo/"; 
   mashiro_option.qq_avatar_api_url = "https://api.mashiro.top/qqinfo/";
@@ -61,6 +62,356 @@
   </style>
   <style type="text/css">.site-top .lower nav{display:block !important;}.author-profile i,.post-like a,.post-share .show-share,.sub-text,.we-info a,span.sitename,.post-more i:hover,#pagination a:hover,.post-content a:hover,.float-content i:hover{color:#FE9600}.feature i,.download,.navigator i:hover,.links ul li:before,.ar-time i,span.ar-circle,.object,.comment .comment-reply-link,.siren-checkbox-radio:checked + .siren-checkbox-radioInput:after{background:#FE9600}::-webkit-scrollbar-thumb{background:#FE9600}.download,.navigator i:hover,.link-title,.links ul li:hover,#pagination a:hover,.comment-respond input[type='submit']:hover{border-color:#FE9600}.entry-content a:hover,.site-info a:hover,.comment h4 a,#comments-navi a.prev,#comments-navi a.next,.comment h4 a:hover,.site-top ul li a:hover,.entry-title a:hover,#archives-temp h3,span.page-numbers.current,.sorry li a:hover,.site-title a:hover,i.iconfont.js-toggle-search.iconsearch:hover,.comment-respond input[type='submit']:hover{color:#FE9600}.comments .comments-main{display:block !important;}.comments .comments-hidden{display:none !important;}background-position:center center;background-attachment:inherit;}
   </style>
+  <style type="text/css">
+    /* ===== Hitokoto Hero Section ===== */
+    .hitokoto-hero {
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 10;
+      padding: 20px;
+    }
+    /* 一言区域 */
+    .hitokoto-section {
+      margin-bottom: 30px;
+      text-align: center;
+      max-width: 680px;
+    }
+    .hitokoto-text {
+      font-size: 22px;
+      color: #fff;
+      line-height: 1.8;
+      letter-spacing: 2px;
+      text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+      transition: opacity 0.3s ease;
+      font-family: 'Noto Serif SC', 'Georgia', serif;
+    }
+    .hitokoto-text::before {
+      content: '「';
+      font-size: 28px;
+      opacity: 0.6;
+    }
+    .hitokoto-text::after {
+      content: '」';
+      font-size: 28px;
+      opacity: 0.6;
+    }
+    .hitokoto-from {
+      font-size: 14px;
+      color: rgba(255,255,255,0.7);
+      margin-top: 10px;
+      letter-spacing: 1px;
+      transition: opacity 0.3s ease;
+    }
+    /* 头像与站点 */
+    .hero-profile {
+      text-align: center;
+      margin-bottom: 25px;
+    }
+    .hero-profile .header-tou {
+      margin: 0 auto 15px;
+    }
+    .hero-profile .header-tou img {
+      width: 90px;
+      height: 90px;
+      border-radius: 50%;
+      border: 3px solid rgba(255,255,255,0.8);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+      transition: transform 0.3s ease;
+    }
+    .hero-profile .header-tou img:hover {
+      transform: scale(1.1) rotate(360deg);
+    }
+    .hero-title {
+      font-size: 26px;
+      color: #fff;
+      font-weight: 600;
+      letter-spacing: 3px;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.3);
+      margin: 0 0 8px;
+    }
+    .hero-desc {
+      font-size: 15px;
+      color: rgba(255,255,255,0.8);
+      letter-spacing: 1px;
+      text-shadow: 0 1px 4px rgba(0,0,0,0.2);
+      margin: 0;
+    }
+    /* 社交图标 */
+    .hero-social {
+      display: flex;
+      gap: 15px;
+      margin-bottom: 30px;
+    }
+    .hero-social .social-link {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.15);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255,255,255,0.2);
+      transition: all 0.3s ease;
+    }
+    .hero-social .social-link:hover {
+      background: rgba(255,255,255,0.3);
+      transform: translateY(-3px);
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    }
+    .hero-social .social-link img {
+      width: 22px;
+      height: 22px;
+    }
+    /* 导航按钮 */
+    .hero-nav {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .hero-nav-btn {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 18px;
+      border-radius: 25px;
+      background: rgba(255,255,255,0.12);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255,255,255,0.2);
+      color: #fff;
+      font-size: 14px;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      letter-spacing: 1px;
+    }
+    .hero-nav-btn:hover {
+      background: rgba(255,255,255,0.25);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+    .hero-nav-btn i {
+      font-size: 13px;
+    }
+    /* 隐藏旧的 focusinfo */
+    .focusinfo { display: none !important; }
+
+    /* ===== 其他样式 ===== */
+    .notice {
+      border-radius: 12px;
+      backdrop-filter: blur(10px);
+      background: rgba(255,255,255,0.75);
+      border: 1px solid rgba(255,255,255,0.3);
+      box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .notice:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+    }
+    .notice-content { font-size: 15px; letter-spacing: 0.5px; }
+    .main-title { font-size: 24px !important; padding: 15px 0; color: #555; }
+    .main-title i { margin-right: 8px; color: #FE9600; }
+    .fes-title { font-size: 22px !important; color: #555; }
+    .fes-title i { margin-right: 8px; color: #FE9600; }
+    .post-list-thumb {
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .post-list-thumb:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+    }
+    .post-content { padding: 15px 20px; }
+    .post-content .post-title h3 { font-size: 20px; font-weight: 600; color: #333; margin: 8px 0; }
+    .post-content .post-meta { font-size: 13px; color: #999; }
+    .post-content .float-content p { font-size: 14px; color: #666; line-height: 1.6; }
+
+    /* 响应式 */
+    @media (max-width: 768px) {
+      .hitokoto-text { font-size: 17px; line-height: 1.7; }
+      .hero-title { font-size: 22px; }
+      .hero-nav { gap: 8px; }
+      .hero-nav-btn { padding: 6px 14px; font-size: 13px; }
+      .hero-social { gap: 10px; }
+      .hero-social .social-link { width: 36px; height: 36px; }
+      .archive-sidebar { width: 85vw !important; }
+    }
+
+    /* ===== 汉堡按钮 ===== */
+    .archive-hamburger {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      z-index: 9999;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.85);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255,255,255,0.4);
+      box-shadow: 0 2px 12px rgba(0,0,0,0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      opacity: 0;
+      transform: translateX(-60px);
+      transition: opacity 0.4s ease, transform 0.4s ease, background 0.2s, box-shadow 0.2s;
+      pointer-events: none;
+    }
+    .archive-hamburger.visible {
+      opacity: 1;
+      transform: translateX(0);
+      pointer-events: auto;
+    }
+    .archive-hamburger:hover {
+      background: rgba(254,150,0,0.9);
+      box-shadow: 0 4px 18px rgba(254,150,0,0.3);
+    }
+    .archive-hamburger:hover i { color: #fff; }
+    .archive-hamburger i {
+      font-size: 20px;
+      color: #555;
+      transition: color 0.2s;
+    }
+
+    /* ===== 遮罩层 ===== */
+    .archive-overlay {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.4);
+      z-index: 9998;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.35s ease;
+    }
+    .archive-overlay.show {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    /* ===== 侧边栏面板 ===== */
+    .archive-sidebar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 320px;
+      height: 100vh;
+      background: rgba(255,255,255,0.95);
+      backdrop-filter: blur(15px);
+      z-index: 10000;
+      transform: translateX(-100%);
+      transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+      display: flex;
+      flex-direction: column;
+      box-shadow: 4px 0 25px rgba(0,0,0,0.08);
+    }
+    .archive-sidebar.open {
+      transform: translateX(0);
+    }
+    .archive-sidebar-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 20px;
+      border-bottom: 2px solid #FE9600;
+      flex-shrink: 0;
+    }
+    .archive-sidebar-header h3 {
+      font-size: 17px;
+      font-weight: 600;
+      color: #333;
+      margin: 0;
+      letter-spacing: 1px;
+    }
+    .archive-sidebar-header h3 i { margin-right: 8px; color: #FE9600; }
+    .archive-close {
+      font-size: 26px;
+      color: #999;
+      cursor: pointer;
+      line-height: 1;
+      transition: color 0.2s;
+    }
+    .archive-close:hover { color: #FE9600; }
+    .archive-sidebar-body {
+      flex: 1;
+      overflow-y: auto;
+      padding: 15px 20px;
+    }
+    .archive-sidebar-body::-webkit-scrollbar { width: 4px; }
+    .archive-sidebar-body::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.12); border-radius: 2px; }
+
+    /* 年份树 */
+    .archive-year { margin-bottom: 5px; }
+    .year-label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 15px;
+      font-weight: 600;
+      color: #333;
+      padding: 8px 0;
+      cursor: pointer;
+      user-select: none;
+      transition: color 0.2s;
+      margin: 0;
+    }
+    .year-label:hover { color: #FE9600; }
+    .year-arrow {
+      font-size: 11px;
+      transition: transform 0.3s;
+      color: #999;
+    }
+    .archive-year.collapsed .year-arrow { transform: rotate(-90deg); }
+    .archive-year.collapsed .archive-list { display: none; }
+    .year-count {
+      margin-left: auto;
+      font-size: 12px;
+      color: #999;
+      background: #f5f5f5;
+      padding: 1px 8px;
+      border-radius: 10px;
+      font-weight: 400;
+    }
+    .archive-list {
+      list-style: none;
+      padding: 0 0 0 5px;
+      margin: 0;
+    }
+    .archive-list li {
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+      padding: 5px 0;
+      border-left: 2px solid #eee;
+      padding-left: 12px;
+      transition: border-color 0.2s;
+    }
+    .archive-list li:hover { border-color: #FE9600; }
+    .archive-date {
+      font-size: 12px;
+      color: #aaa;
+      font-family: 'Source Code Pro', monospace;
+      flex-shrink: 0;
+    }
+    .archive-link {
+      font-size: 13px;
+      color: #555;
+      text-decoration: none;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      transition: color 0.2s;
+    }
+    .archive-link:hover { color: #FE9600; }
+  </style>
 <meta name="generator" content="Hexo 8.1.2"><link rel="alternate" href="/hexo-site/atom.xml" title="咏晴小柳" type="application/atom+xml">
 </head>
 
@@ -73,44 +424,82 @@
   <div id="banner_wave_1"></div>
   <div id="banner_wave_2"></div>
   <figure id="centerbg" class="centerbg">
-    <div class="focusinfo no-select">
-      <div class="header-tou">
-        <a href="https://senxl.github.io/hexo-site/">
-          <img src="https://cdn.jsdelivr.net/gh/senxl/hexo-cdn/img/custom/avatar.jpg">
-        </a>
-      </div>
-      <div class="header-info">
-        <p>Live your life with passion! With some drive!</p>
-        <div class="top-social_v2">
-          <li id="bg-pre">
-            <img class="flipx" src="https://cdn.jsdelivr.net/gh/senxl/hexo-cdn/img/other/next-b.svg">
-          </li>
-          
-            
-              
-                <li>
-                  <a href="http://github.com/senxl" target="_blank" class="social-github" title="github">
-                    <img src="https://cdn.jsdelivr.net/gh/senxl/hexo-cdn/img/social/github.png">
-                  </a>
-                </li>
-              
-            
-              
-                <li>
-                  <a href="https://music.163.com/#/user/home?id=513959387" target="_blank" class="social-github" title="wangyiyun">
-                    <img src="https://cdn.jsdelivr.net/gh/senxl/hexo-cdn/img/social/wangyiyun.png">
-                  </a>
-                </li>
-              
-            
-          
-          <li id="bg-next">
-            <img src="https://cdn.jsdelivr.net/gh/senxl/hexo-cdn/img/other/next-b.svg">
-          </li>
+    <div class="hitokoto-hero no-select">
+      <!-- 一言展示区 -->
+      <div class="hitokoto-section">
+        <div class="hitokoto-content">
+          <p id="hitokoto_text" class="hitokoto-text">加载中...</p>
+          <p id="hitokoto_from" class="hitokoto-from"></p>
         </div>
+      </div>
+
+      <!-- 头像与站点信息 -->
+      <div class="hero-profile">
+        <div class="header-tou">
+          <a href="https://senxl.github.io/hexo-site/">
+            <img src="https://cdn.jsdelivr.net/gh/senxl/hexo-cdn/img/custom/avatar.jpg">
+          </a>
+        </div>
+        <h1 class="hero-title">さくら荘の咏晴小柳</h1>
+        <p class="hero-desc">以热爱之心，探索技术与生活的无限可能</p>
+      </div>
+
+      <!-- 社交图标 -->
+      <div class="hero-social">
+        
+          
+            
+              <a href="http://github.com/senxl" target="_blank" class="social-link" title="github">
+                <img src="https://cdn.jsdelivr.net/gh/senxl/hexo-cdn/img/social/github.png">
+              </a>
+            
+          
+            
+              <a href="https://music.163.com/#/user/home?id=513959387" target="_blank" class="social-link" title="wangyiyun">
+                <img src="https://cdn.jsdelivr.net/gh/senxl/hexo-cdn/img/social/wangyiyun.png">
+              </a>
+            
+          
+        
+      </div>
+
+      <!-- 导航按钮 -->
+      <div class="hero-nav">
+        
+          <a href="/hexo-site/" class="hero-nav-btn">
+            <i class="fa fa-fort-awesome" aria-hidden="true"></i>
+            <span>首页</span>
+          </a>
+        
+          <a href="#toc" class="hero-nav-btn">
+            <i class="fa fa-list-ul" aria-hidden="true"></i>
+            <span>目录</span>
+          </a>
+        
+          <a href="/hexo-site/comment/" class="hero-nav-btn">
+            <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+            <span>留言板</span>
+          </a>
+        
+          <a href="/hexo-site/links/" class="hero-nav-btn">
+            <i class="fa fa-link" aria-hidden="true"></i>
+            <span>友人帐</span>
+          </a>
+        
+          <a href="/hexo-site/bangumi/" class="hero-nav-btn">
+            <i class="fa fa-film" aria-hidden="true"></i>
+            <span>番组</span>
+          </a>
+        
+          <a href="/hexo-site/theme-sakura/" class="hero-nav-btn">
+            <i class="fa iconfont" aria-hidden="true"></i>
+            <span>关于</span>
+          </a>
+        
       </div>
     </div>
   </figure>
+
   <div id="video-container" style="">
     <video style="object-fit: fill" id="bgvideo" class="video" video-name="" src="" width="auto" preload="auto">
     </video>
@@ -121,13 +510,130 @@
     <div class="video-stu">
     </div>
   </div>
+
   <div class="headertop-down faa-float animated" onclick="headertop_down()">
     <span>
-      <i class="fa fa-chevron-down" aria-hidden="true">
-      </i>
+      <i class="fa fa-chevron-down" aria-hidden="true"></i>
     </span>
   </div>
 </div>
+
+<!-- 一言 API -->
+<script>
+(function() {
+  function fetchHitokoto() {
+    fetch('https://v1.hitokoto.cn/')
+      .then(function(res) { return res.json(); })
+      .then(function(data) {
+        var textEl = document.getElementById('hitokoto_text');
+        var fromEl = document.getElementById('hitokoto_from');
+        if (textEl) {
+          textEl.style.opacity = '0';
+          setTimeout(function() {
+            textEl.textContent = data.hitokoto;
+            fromEl.textContent = data.from ? '——「' + data.from + '」' : '';
+            textEl.style.opacity = '1';
+            fromEl.style.opacity = '1';
+          }, 300);
+        }
+      })
+      .catch(function() {
+        var textEl = document.getElementById('hitokoto_text');
+        if (textEl) textEl.textContent = '世界上最重要的事情，就是不要忘记你所热爱的一切。';
+      });
+  }
+  fetchHitokoto();
+  setInterval(fetchHitokoto, 10000);
+})();
+</script>
+
+<!-- 文章归档侧边栏 -->
+<div id="archive-hamburger" class="archive-hamburger" onclick="toggleArchiveSidebar()">
+  <i class="fa fa-bars" aria-hidden="true"></i>
+</div>
+<div id="archive-overlay" class="archive-overlay" onclick="toggleArchiveSidebar()"></div>
+<div id="archive-sidebar" class="archive-sidebar">
+  <div class="archive-sidebar-header">
+    <h3><i class="fa fa-archive" aria-hidden="true"></i> 文章归档</h3>
+    <span class="archive-close" onclick="toggleArchiveSidebar()">&times;</span>
+  </div>
+  <div class="archive-sidebar-body">
+    
+    
+    <div class="archive-year">
+      <h4 class="year-label" onclick="this.parentElement.classList.toggle('collapsed')">
+        <i class="fa fa-chevron-down year-arrow" aria-hidden="true"></i>
+        <span>2020</span>
+        <span class="year-count">3</span>
+      </h4>
+      <ul class="archive-list">
+        
+        <li>
+          <span class="archive-date">11-18</span>
+          <a href="/hexo-site/2020/11/18/cmake%E5%9C%A8linux%E4%B8%8B%E7%BC%96%E8%AF%91c-%E7%A8%8B%E5%BA%8F/" class="archive-link">cmake在linux下编译c++程序</a>
+        </li>
+        
+        <li>
+          <span class="archive-date">10-06</span>
+          <a href="/hexo-site/2020/10/06/stm32%E7%94%A8%E5%AF%84%E5%AD%98%E5%99%A8%E7%82%B9%E7%81%AF%E4%BB%A3%E7%A0%81/" class="archive-link">stm32用寄存器点灯代码</a>
+        </li>
+        
+        <li>
+          <span class="archive-date">09-12</span>
+          <a href="/hexo-site/2020/09/12/%E5%8D%9A%E5%AE%A2%E5%90%AF%E7%94%A8/" class="archive-link">博客启用</a>
+        </li>
+        
+      </ul>
+    </div>
+    
+  </div>
+</div>
+
+<script>
+// 侧边栏开关
+function toggleArchiveSidebar() {
+  var sidebar = document.getElementById('archive-sidebar');
+  var overlay = document.getElementById('archive-overlay');
+  var isOpen = sidebar.classList.contains('open');
+  if (isOpen) {
+    sidebar.classList.remove('open');
+    overlay.classList.remove('show');
+    document.body.style.overflow = '';
+  } else {
+    sidebar.classList.add('open');
+    overlay.classList.add('show');
+    document.body.style.overflow = 'hidden';
+  }
+}
+
+// 滚动控制：下滑一页后显示汉堡按钮
+(function() {
+  var hamburger = document.getElementById('archive-hamburger');
+  var heroHeight = window.innerHeight;
+
+  function checkScroll() {
+    if (window.scrollY > heroHeight * 0.6) {
+      hamburger.classList.add('visible');
+    } else {
+      hamburger.classList.remove('visible');
+      // 如果侧边栏开着，关掉
+      var sidebar = document.getElementById('archive-sidebar');
+      if (sidebar.classList.contains('open')) {
+        toggleArchiveSidebar();
+      }
+    }
+  }
+
+  window.addEventListener('scroll', checkScroll, { passive: true });
+  checkScroll();
+})();
+
+// 打开主页时确保页面在最顶部
+if (window.location.pathname === '/' || window.location.pathname === '/hexo-site/' || window.location.pathname === '/hexo-site') {
+  window.scrollTo(0, 0);
+}
+</script>
+
     <div id="page" class="site wrapper">
       <header class="site-header no-select gizle sabit" role="banner">
   <div class="site-top">
@@ -135,7 +641,7 @@
       <span class="site-title">
         <span class="logolink moe-mashiro">
           <a href="/hexo-site/">
-            <span class="sakurasono">さくら荘その咏晴小柳</span>
+            <span class="sakurasono">さくら荘の咏晴小柳</span>
             <!-- <span class="shironeko"></span> -->
           </a>
         </span>
@@ -163,6 +669,16 @@
                   <span class="faa-parent animated-hover">
                     <i class="fa  fa-fort-awesome faa-shake" aria-hidden="true"></i>
                     首页
+                  </span>
+                </a>
+                
+              </li>
+            
+              <li>
+                <a href="#toc">
+                  <span class="faa-parent animated-hover">
+                    <i class="fa  fa-list-ul faa-vertical" aria-hidden="true"></i>
+                    目录
                   </span>
                 </a>
                 
@@ -396,11 +912,11 @@
         <img src="https://cdn.jsdelivr.net/gh/senxl/hexo-cdn/img/other/wordpress-rotating-ball-o.svg">
         <img src="https://cdn.jsdelivr.net/gh/senxl/hexo-cdn/img/other/disqus-preloader.svg">
       </div>
-      <p style="color: #666666;">&copy 2020</p>
+      <p style="color: #666666;">&copy; 2026 <a href="https://senxl.github.io/hexo-site" target="_blank" style="color: #666666;">咏晴小柳</a></p>
     </div>
     <div class="footer-device">
     <p style="font-family: 'Ubuntu', sans-serif;">
-        <span style="color: #b9b9b9;">Theme <a href="https://github.com/honjun/hexo-theme-sakura" target="_blank" style="color: #b9b9b9;;text-decoration: underline dotted rgba(0, 0, 0, .1);">Sakura</a> <i class="iconfont icon-sakura rotating" style="color: #ffc0cb;display:inline-block"></i> by <a href="https://2heng.xin/" target="_blank" style="color: #b9b9b9;;text-decoration: underline dotted rgba(0, 0, 0, .1);">Mashiro</a>&<a href="https://www.hojun.cn/" target="_blank" style="color: #b9b9b9;;text-decoration: underline dotted rgba(0, 0, 0, .1);">Hojun</a>, Powered by Hexo, Hosted by Gitee Pages, CDN by GitHub</a>
+        <span style="color: #b9b9b9;">Theme <a href="https://github.com/honjun/hexo-theme-sakura" target="_blank" style="color: #b9b9b9;;text-decoration: underline dotted rgba(0, 0, 0, .1);">Sakura</a> <i class="iconfont icon-sakura rotating" style="color: #ffc0cb;display:inline-block"></i> by <a href="https://2heng.xin/" target="_blank" style="color: #b9b9b9;;text-decoration: underline dotted rgba(0, 0, 0, .1);">Mashiro</a>&<a href="https://www.hojun.cn/" target="_blank" style="color: #b9b9b9;;text-decoration: underline dotted rgba(0, 0, 0, .1);">Hojun</a>, Powered by Hexo, Hosted by <a href="https://github.com/senxl/hexo-site" target="_blank" style="color: #b9b9b9;;text-decoration: underline dotted rgba(0, 0, 0, .1);">GitHub Pages</a>, CDN by jsDelivr
         </span>
       </p>
     </div>
@@ -416,8 +932,7 @@
 <script type="text/javascript" src="/hexo-site/js/jquery.fancybox.min.js"></script>
 <script type="text/javascript" src="/hexo-site/js/zoom.min.js"></script>
 <script type="text/javascript" src="/hexo-site/js/sakura-app.js"></script>
-<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
-<script src='//unpkg.com/valine@1.3.4/dist/Valine.min.js'></script>
+
 <script src="/hexo-site/js/botui.js"></script>
 <!-- 不蒜子 网页计数器 -->
 <script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
@@ -434,28 +949,41 @@ if (/Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent)) {
 </script>
 <script>
 $(document).ready(function() {
+  var $tocMenuItem = $('#menu-new li').has('a[href="#toc"], a[href$="#toc"]');
+
+  // TOC toggle click handler — always bind so it works on all pages
+  // Use href$= selector to match both "#toc" (home page) and "/path/#toc" variants
+  $(document).on('click', 'a[href="#toc"], a[href$="#toc"]', function(e) {
+    e.preventDefault();
+    e.stopPropagation();
+    var $toc = $('.toc');
+    if ($toc.length > 0) {
+      $tocMenuItem.find('a').toggleClass('active');
+      $toc.toggle();
+    }
+    return false;
+  });
+
+  // Desktop TOC initialization and scroll behavior
   if ($(".toc").length > 0 && document.body.clientWidth > 1200) {
+    // Show TOC menu item: remove parent nav hide class first
+    $tocMenuItem.closest('nav').removeClass('hide').addClass('navbar');
+    $tocMenuItem.show();
     if ($(".pattern-center").length > 0) { //有图的情况
       tocbot.init({
-          // Where to render the table of contents.
-          tocSelector: '.toc', // 放置目录的容器
-          // Where to grab the headings to build the table of contents.
-          contentSelector: '.entry-content', // 正文内容所在
-          // Which headings to grab inside of the contentSelector element.
+          tocSelector: '.toc',
+          contentSelector: '.entry-content',
           scrollSmooth: true,
-          headingSelector: 'h1, h2, h3, h4, h5', // 需要索引的标题级别
+          headingSelector: 'h1, h2, h3, h4, h5',
           headingsOffset: -400,
           scrollSmoothOffset: -85
       });
     } else {
       tocbot.init({
-          // Where to render the table of contents.
-          tocSelector: '.toc', // 放置目录的容器
-          // Where to grab the headings to build the table of contents.
-          contentSelector: '.entry-content', // 正文内容所在
-          // Which headings to grab inside of the contentSelector element.
+          tocSelector: '.toc',
+          contentSelector: '.entry-content',
           scrollSmooth: true,
-          headingSelector: 'h1, h2, h3, h4, h5', // 需要索引的标题级别
+          headingSelector: 'h1, h2, h3, h4, h5',
           headingsOffset: -85,
           scrollSmoothOffset: -85
       });
@@ -468,7 +996,7 @@ $(document).ready(function() {
       } else {
         $('.toc').removeClass('toc-fixed');
       }
-    }
+    };
   }
 });
 </script>
@@ -486,7 +1014,7 @@ $(document).ready(function() {
   <div class="m-avatar">
     <img src="https://cdn.jsdelivr.net/gh/senxl/hexo-cdn/img/custom/avatar.jpg">
   </div>
-  <p style="text-align: center; color: #333; font-weight: 900; font-family: 'Ubuntu', sans-serif; letter-spacing: 1.5px">さくら荘その咏晴小柳</p>
+  <p style="text-align: center; color: #333; font-weight: 900; font-family: 'Ubuntu', sans-serif; letter-spacing: 1.5px">さくら荘の咏晴小柳</p>
   <p style="text-align: center; word-spacing: 20px;">
     
       
@@ -501,6 +1029,16 @@ $(document).ready(function() {
           <span class="faa-parent animated-hover">
             <i class="fa  fa-fort-awesome faa-shake" aria-hidden="true"></i>
             首页
+          </span>
+        </a>
+        
+      </li>
+    
+      <li>
+        <a href="#toc">
+          <span class="faa-parent animated-hover">
+            <i class="fa  fa-list-ul faa-vertical" aria-hidden="true"></i>
+            目录
           </span>
         </a>
         
@@ -572,7 +1110,7 @@ $(document).ready(function() {
       </li>
     
   </ul>
-  <p style="text-align: center; font-size: 13px; color: #b9b9b9;">&copy 2019 hexo-sakura</p>
+  <p style="text-align: center; font-size: 13px; color: #b9b9b9;">&copy; 2026 さくら荘の咏晴小柳</p>
 </div>
 <button onclick="topFunction()" class="mobile-cd-top" id="moblieGoTop" title="Go to top" style="display: none;"><i class="fa fa-chevron-up" aria-hidden="true"></i></button>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css">

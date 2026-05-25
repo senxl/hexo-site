@@ -666,6 +666,11 @@ var pjaxInit = function () {
   original_emoji_click()
   mashiro_global.font_control.ini()
   $('p').remove('.head-copyright')
+  
+  // Reset TOC menu item state
+  $('#menu-new li').has('a[href="#toc"], a[href$="#toc"]').find('a').removeClass('active');
+  // Don't unconditionally hide; let TOC() handle visibility
+  
   try {
     code_highlight_style()
   } catch (e) {};
@@ -1050,42 +1055,16 @@ var home = location.href,
       $.getScript('//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js')
     },
     TOC: function () {
+      var $tocMenuItem = $('#menu-new li').has('a[href="#toc"], a[href$="#toc"]');
       if ($('.toc').length > 0 && document.body.clientWidth > 1200) {
-        if ($(".pattern-center").length > 0) { //有图的情况
-          tocbot.init({
-              // Where to render the table of contents.
-              tocSelector: '.toc', // 放置目录的容器
-              // Where to grab the headings to build the table of contents.
-              contentSelector: '.entry-content', // 正文内容所在
-              // Which headings to grab inside of the contentSelector element.
-              scrollSmooth: true,
-              headingSelector: 'h1, h2, h3, h4, h5', // 需要索引的标题级别
-              headingsOffset: -400,
-              scrollSmoothOffset: -85
-          });
-        } else {
-          tocbot.init({
-              // Where to render the table of contents.
-              tocSelector: '.toc', // 放置目录的容器
-              // Where to grab the headings to build the table of contents.
-              contentSelector: '.entry-content', // 正文内容所在
-              // Which headings to grab inside of the contentSelector element.
-              scrollSmooth: true,
-              headingSelector: 'h1, h2, h3, h4, h5', // 需要索引的标题级别
-              headingsOffset: -85,
-              scrollSmoothOffset: -85
-          });
-        }
-        var offsetTop = $('.toc').offset().top - 135
-        window.onscroll = function () {
-          var scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
-          if (scrollTop >= offsetTop) {
-            $('.toc').addClass('toc-fixed')
-          } else {
-            $('.toc').removeClass('toc-fixed')
-          }
-        }
-        $.getScript('//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js');
+        // Show TOC menu item: remove parent nav hide class first
+        $tocMenuItem.closest('nav').removeClass('hide').addClass('navbar');
+        $tocMenuItem.show();
+      } else if ($('.entry-content').length > 0 && document.body.clientWidth > 1200) {
+        $tocMenuItem.closest('nav').removeClass('hide').addClass('navbar');
+        $tocMenuItem.show();
+      } else {
+        $tocMenuItem.hide();
       }
     },
     AB: function () {
@@ -1098,15 +1077,15 @@ var home = location.href,
       }
     },
     VA: function () {
-      if (!valine) {
-        var valine = new Valine()
-        valine.init({
-          el: '#vcomments',
-          appId: mashiro_option.v_appId,
-          appKey: mashiro_option.v_appKey,
-          path: window.location.pathname,
-          placeholder: '你是我一生只会遇见一次的惊喜 ...'
-        })
+      if (document.getElementById('utterances-container') && mashiro_option.utterances_repo) {
+        var s = document.createElement('script');
+        s.src = 'https://utteranc.es/client.js';
+        s.setAttribute('repo', mashiro_option.utterances_repo);
+        s.setAttribute('issue-term', mashiro_option.utterances_issue_term || 'pathname');
+        s.setAttribute('theme', mashiro_option.utterances_theme || 'github-light');
+        s.setAttribute('crossorigin', 'anonymous');
+        s.async = true;
+        document.getElementById('utterances-container').appendChild(s);
       }
     },
     MJ: function () {
@@ -1530,6 +1509,8 @@ $(function () {
   Siren.MN()
   Siren.IA()
   Siren.LV()
+  Siren.VA()
+  Siren.TOC()
   if (window.is_app) injectStyles('#nprogress .bar { display: none; }')
   if (Poi.pjax) {
     $(document).pjax('a[target!=_top]', '#page', {

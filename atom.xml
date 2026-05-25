@@ -1,13 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
+  <author>
+    <name>咏晴小柳</name>
+  </author>
   <generator uri="https://hexo.io/">Hexo</generator>
   <id>https://senxl.github.io/hexo-site/</id>
   <link href="https://senxl.github.io/hexo-site/" rel="alternate"/>
   <link href="https://senxl.github.io/hexo-site/atom.xml" rel="self"/>
+  <rights>All rights reserved 2026, 咏晴小柳</rights>
   <subtitle>只是一粒沙砾罢了</subtitle>
   <title>咏晴小柳</title>
-  <updated>2026-05-25T01:48:52.370Z</updated>
+  <updated>2026-05-25T06:15:52.317Z</updated>
   <entry>
+    <author>
+      <name>咏晴小柳</name>
+    </author>
     <category term="技术" scheme="https://senxl.github.io/hexo-site/categories/%E6%8A%80%E6%9C%AF/"/>
     <category term="cmake" scheme="https://senxl.github.io/hexo-site/tags/cmake/"/>
     <content>
@@ -18,9 +25,12 @@
     <published>2020-11-18T14:52:50.000Z</published>
     <summary>记录一次简单linux下的cmake使用，编译运行cpp输出hello world！</summary>
     <title>cmake在linux下编译c++程序</title>
-    <updated>2026-05-25T01:48:52.370Z</updated>
+    <updated>2026-05-25T06:15:52.317Z</updated>
   </entry>
   <entry>
+    <author>
+      <name>咏晴小柳</name>
+    </author>
     <category term="技术" scheme="https://senxl.github.io/hexo-site/categories/%E6%8A%80%E6%9C%AF/"/>
     <category term="流水灯" scheme="https://senxl.github.io/hexo-site/tags/%E6%B5%81%E6%B0%B4%E7%81%AF/"/>
     <content>
@@ -31,9 +41,12 @@
     <published>2020-10-06T12:22:55.000Z</published>
     <summary>学习stm32的第一个程序</summary>
     <title>stm32用寄存器点灯代码</title>
-    <updated>2026-05-25T01:48:52.371Z</updated>
+    <updated>2026-05-25T06:15:52.318Z</updated>
   </entry>
   <entry>
+    <author>
+      <name>咏晴小柳</name>
+    </author>
     <category term="技术" scheme="https://senxl.github.io/hexo-site/categories/%E6%8A%80%E6%9C%AF/"/>
     <content>
       <![CDATA[<p> 前前后后，看了很多教程终于把博客搭建起来了。</p><p>但是目前并不完善，还有许多资源链接以及信息要改改。</p><iframe src="//player.bilibili.com/player.html?aid=14335509&bvid=BV1hx41147P5&cid=23394837&page=1" width="100%" height="553" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"> </iframe><p><strong>bilibili视频播放测试</strong></p>]]>
@@ -47,6 +60,6 @@
 <iframe src="//player.bilibili.com/player.html?aid=14335509&bvid=BV1hx41147P]]>
     </summary>
     <title>博客启用</title>
-    <updated>2026-05-25T01:48:52.372Z</updated>
+    <updated>2026-05-25T06:15:52.319Z</updated>
   </entry>
 </feed>
