@@ -305,3 +305,63 @@ i.iconfont.js-toggle-search.iconsearch:hover,
 .aplayer.aplayer-fixed .aplayer-lrc { display: none; }
 .aplayer .aplayer-lrc.aplayer-lrc-hide { display: none !important; }
 .aplayer.aplayer-fixed .lrc-show { display: block; background: rgba(255, 255, 255, 0.8); }
+
+/* ===== 目录页面 (toc.ejs) ===== */
+.toc-page-content {
+  padding: 20px 30px 40px;
+  max-width: 800px;
+  margin: 0 auto;
+}
+.toc-page-content .year-label {
+  font-size: 18px;
+  padding: 12px 0 8px;
+  border-bottom: 1px dashed #eee;
+  margin-bottom: 4px;
+}
+.toc-page-content .archive-list li {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  padding: 7px 0 7px 12px;
+}
+.toc-page-content .archive-list li:hover {
+  border-color: #FE9600;
+}
+.toc-page-content .archive-list li:hover .archive-link {
+  color: #FE9600;
+}
+.toc-categories {
+  margin-left: auto;
+  flex-shrink: 0;
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+.toc-category {
+  font-size: 11px;
+  color: #FE9600;
+  background: rgba(254, 150, 0, 0.08);
+  padding: 1px 8px;
+  border-radius: 3px;
+  text-decoration: none;
+  transition: background 0.2s;
+  white-space: nowrap;
+}
+.toc-category:hover {
+  background: rgba(254, 150, 0, 0.18);
+}
+
+@media (max-width: 768px) {
+  .toc-page-content {
+    padding: 15px 15px 30px;
+  }
+  .toc-page-content .archive-list li {
+    flex-wrap: wrap;
+    gap: 4px;
+  }
+  .toc-categories {
+    margin-left: 0;
+    padding-left: 44px;
+  }
+}

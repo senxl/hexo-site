@@ -2,24 +2,11 @@
    toc-init.js — TOC (目录) 初始化与交互逻辑
    ============================================================ */
 $(document).ready(function() {
-  var $tocMenuItem = $('#menu-new li').has('a[href="#toc"], a[href$="#toc"]');
-
-  // TOC toggle click handler
-  $(document).on('click', 'a[href="#toc"], a[href$="#toc"]', function(e) {
-    e.preventDefault();
-    e.stopPropagation();
-    var $toc = $('.toc');
-    if ($toc.length > 0) {
-      $tocMenuItem.find('a').toggleClass('active');
-      $toc.toggle();
-    }
-    return false;
-  });
-
-  // Desktop TOC initialization and scroll behavior
+  // Desktop TOC (tocbot) initialization and scroll behavior
+  // Only runs on article pages where .toc div exists
   if ($(".toc").length > 0 && document.body.clientWidth > 1200) {
-    $tocMenuItem.closest('nav').removeClass('hide').addClass('navbar');
-    $tocMenuItem.show();
+    // Show the tocbot sidebar on desktop automatically
+    $('.toc').show();
 
     var tocConfig = {
       tocSelector: '.toc',
@@ -36,6 +23,7 @@ $(document).ready(function() {
 
     tocbot.init(tocConfig);
 
+    // Fixed positioning on scroll
     var offsetTop = $('.toc').offset().top - 95;
     window.onscroll = function() {
       var scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop;
