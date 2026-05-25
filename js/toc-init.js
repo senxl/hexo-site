@@ -4,7 +4,7 @@
 $(document).ready(function() {
   // Desktop TOC (tocbot) initialization and scroll behavior
   // Only runs on article pages where .toc div exists
-  if ($(".toc").length > 0 && document.body.clientWidth > 1200) {
+  if ($(".toc").length > 0 && document.body.clientWidth > 1024) {
     // Show the tocbot sidebar on desktop automatically
     $('.toc').show();
 

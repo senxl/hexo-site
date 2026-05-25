@@ -1077,7 +1077,7 @@ a:hover,a:active {
     right:5px;
     width:32px;
     height:32px;
-    z-index:7;
+    z-index:15;
     background-position:center;
     background-size:cover;
     cursor:pointer;

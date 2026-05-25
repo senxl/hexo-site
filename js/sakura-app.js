@@ -302,38 +302,8 @@ function attach_image () {
         alert('图片上传大小限制为5 MB.\n5 MB max per file.\n\n「' + this.files[i].name + '」\n\n这张图太大啦~\nThis image is too large~')
       }
     }
-    for (var i = 0; i < this.files.length; i++) {
-      var f = this.files[i]
-      var formData = new FormData()
-      formData.append('smfile', f)
-      $.ajax({
-        url: 'https://sm.ms/api/upload',
-        type: 'POST',
-        processData: false,
-        contentType: false,
-        data: formData,
-        beforeSend: function (xhr) {
-          $('.insert-image-tips').html('<i class="fa fa-spinner rotating" aria-hidden="true"></i>')
-          addComment.createButterbar('上传中...<br>Uploading...')
-        }, success: function (res) {
-          $('.insert-image-tips').html('<i class="fa fa-check" aria-hidden="true"></i>')
-          setTimeout(function () {
-            $('.insert-image-tips').html('<i class="fa fa-picture-o" aria-hidden="true"></i>')
-          }, 1000)
-          var get_the_url = res.data.url.replace('https://i.loli.net/', 'https://static.shino.cc/user-upload/')
-          $('#upload-img-show').append('<img class="lazyload upload-image-preview" src="https://cdn.jsdelivr.net/gh/senxl/hexo-cdn/img/svg/loader/trans.ajax-spinner-preloader.svg" data-src="' + get_the_url + '" onclick="window.open(\'' + get_the_url + '\')" onerror="imgError(this)" />')
-          lazyload()
-          addComment.createButterbar('图片上传成功~<br>Uploaded successfully~')
-          grin(res.data.url.replace('https://i.loli.net/', '{UPLOAD}'), type = 'Img')
-        }, error: function () {
-          $('.insert-image-tips').html('<i class="fa fa-times" aria-hidden="true" style="color:red"></i>')
-          alert('上传失败，请重试.\nUpload failed, please try again.')
-          setTimeout(function () {
-            $('.insert-image-tips').html('<i class="fa fa-picture-o" aria-hidden="true"></i>')
-          }, 1000)
-        }
-      })
-    }
+    // 图片上传功能已禁用（sm.ms v1 API 已废弃，如需启用请配置 sm.ms v2 API Token）
+    addComment.createButterbar('图片上传功能暂未启用<br>Image upload is not available')
   })
 }
 
@@ -396,31 +366,13 @@ function scrollBar () {
       var b = $(window).height()
       var result = parseInt(s / (a - b) * 100)
       $('#bar').css('width', result + '%')
-      if (false) {
-        if (result >= 0 && result <= 19) {
-          $('#bar').css('background', '#cccccc')
-        }
-        if (result >= 20 && result <= 39) { $('#bar').css('background', '#50bcb6') }
-        if (result >= 40 && result <= 59) {
-          $('#bar').css('background', '#85c440')
-        }
-        if (result >= 60 && result <= 79) {
-          $('#bar').css('background', '#f2b63c')
-        }
-        if (result >= 80 && result <= 99) { $('#bar').css('background', '#FF0000') }
-        if (result == 100) {
-          $('#bar').css('background', '#5aaadb')
-        }
-      } else {
-        $('#bar').css('background', 'orange')
-      }
+      $('#bar').css('background', 'orange')
       $('.toc-container').css('height', $('.site-content').outerHeight())
       $('.skin-menu').removeClass('show')
     })
   }
 }
 scrollBar()
-'主题切换代码好恶心，有空一定要重构'
 
 function checkBgImgCookie () {
   var bgurl = getCookie('bgImgSetting')
@@ -441,13 +393,7 @@ function checkBgImgCookie () {
       $('.pattern-center').removeClass('pattern-center').addClass('pattern-center-sakura')
       $('.headertop-bar').removeClass('headertop-bar').addClass('headertop-bar-sakura')
     } else if (bgurl == 'https://api.shino.cc/bing/') {
-      mashiro_global.variables.skinSecter = true
-      mashiro_global.variables.isNight = true
-      $('#night-mode-cover').css('visibility', 'hidden')
-      $('body').css('background-image', 'url(' + bgurl + ')')
-      $('.blank').css('background-color', 'rgba(255,255,255,1)')
-      $('.pattern-center').removeClass('pattern-center').addClass('pattern-center-sakura')
-      $('.headertop-bar').removeClass('headertop-bar').addClass('headertop-bar-sakura')
+      // 已失效的 Bing 壁纸 API，跳过
     } else {}
   } else {
     return false
@@ -455,12 +401,6 @@ function checkBgImgCookie () {
 }
 if (document.body.clientWidth > 860) {
   checkBgImgCookie()
-}
-
-function no_right_click () {
-  $('.post-thumb img').bind('contextmenu', function (e) {
-    return false
-  })
 }
 if (mashiro_global.variables.isNight) {
   $('.changeSkin-gear, .toc').css('background', 'rgba(255,255,255,0.8)')
@@ -483,28 +423,11 @@ $(document).ready(function () {
       setCookie('bgImgSetting', url, 30)
     })
   }
-
-  function changeBGnoTrans (tagid, url) {
-    $('.skin-menu ' + tagid).click(function () {
-      mashiro_global.variables.skinSecter = true
-      mashiro_global.variables.isNight = true
-      $('#night-mode-cover').css('visibility', 'hidden')
-      $('body').css('background-image', 'url(' + url + ')')
-      $('.blank').css('background-color', 'rgba(255,255,255,1)')
-      $('.pattern-center').removeClass('pattern-center').addClass('pattern-center-sakura')
-      $('.headertop-bar').removeClass('headertop-bar').addClass('headertop-bar-sakura')
-      $('#banner_wave_1').addClass('banner_wave_hide_fit_skin')
-      $('#banner_wave_2').addClass('banner_wave_hide_fit_skin')
-      closeSkinMenu()
-      setCookie('bgImgSetting', url, 30)
-    })
-  }
   changeBG('#sakura-bg', 'https://cdn.jsdelivr.net/gh/senxl/hexo-cdn/img/themebg/sakura.png')
   changeBG('#gribs-bg', 'https://cdn.jsdelivr.net/gh/senxl/hexo-cdn/img/themebg/plaid.jpg')
   changeBG('#pixiv-bg', 'https://cdn.jsdelivr.net/gh/senxl/hexo-cdn/img/themebg/star.png')
   changeBG('#KAdots-bg', 'https://cdn.jsdelivr.net/gh/senxl/hexo-cdn/img/themebg/point.png')
   changeBG('#totem-bg', 'https://cdn.jsdelivr.net/gh/senxl/hexo-cdn/img/themebg/little-monster.png')
-  changeBGnoTrans('#bing-bg', 'https://api.shino.cc/bing/')
   $('.skin-menu #white-bg').click(function () {
     mashiro_global.variables.skinSecter = false
     mashiro_global.variables.isNight = false
@@ -558,13 +481,11 @@ $(document).ready(function () {
 
 function nextBG () {
   bgindex = bgindex + 1
-  console.log(bg[Math.abs(bgindex % bg.length)])
   $('.centerbg').css('background-image', 'url("' + bg[Math.abs(bgindex % bg.length)] + '")')
 }
 
 function preBG () {
   bgindex = bgindex - 1
-  console.log(bg[Math.abs(bgindex % bg.length)])
   $('.centerbg').css('background-image', 'url("' + bg[Math.abs(bgindex % bg.length)] + '")')
 }
 $(document).ready(function () {
@@ -597,14 +518,12 @@ if (document.body.clientWidth <= 860 && !window.is_app) {
 }
 
 function reload_show_date_time () {
-  BirthDay = new Date('06/02/2017 18:00:00')
-  today = new Date()
-  timeold = (today.getTime() - BirthDay.getTime())
-  sectimeold = timeold / 1000
-  secondsold = Math.floor(sectimeold)
-  msPerDay = 24 * 60 * 60 * 1000
-  e_daysold = timeold / msPerDay
-  daysold = Math.floor(e_daysold)
+  var monitorday = document.getElementById('monitorday')
+  if (!monitorday) return
+  var BirthDay = new Date('06/02/2017 18:00:00')
+  var today = new Date()
+  var timeold = (today.getTime() - BirthDay.getTime())
+  var daysold = Math.floor(timeold / (24 * 60 * 60 * 1000))
   monitorday.innerHTML = daysold
 }
 
@@ -638,12 +557,6 @@ function timeSeriesReload (flag) {
           $(this).children('.al_post_list').show(400)
           return false
         })
-        if (false) {
-          $('#archives li.al_li').mouseout(function () {
-            $(this).children('.al_post_list').hide(400)
-            return false
-          })
-        }
       }
       var al_expand_collapse_click = 0
       $('#al_expand_collapse').click(function () {
@@ -703,55 +616,11 @@ var pjaxInit = function () {
   smileBoxToggle()
   timeSeriesReload()
   add_copyright()
-  console.log($('#myscript').text())
 }
 $(document).on('click', '.sm', function () {
-  var msg = '您真的要设为私密吗？'
-  if (confirm(msg) == true) {
-    $(this).commentPrivate()
-  } else {
-    aler('已取消')
-  }
+  // WordPress 私密评论功能已移除（Hexo 不支持）
+  return false;
 })
-$.fn.commentPrivate = function () {
-  if ($(this).hasClass('private_now')) {
-    alert('您之前已设过私密评论')
-    return false
-  } else {
-    $(this).addClass('private_now')
-    var idp = $(this).data('idp'),
-      actionp = $(this).data('actionp'),
-      rateHolderp = $(this).children('.has_set_private')
-    var ajax_data = {
-      action: 'siren_private',
-      p_id: idp,
-      p_action: actionp
-    }
-    $.post('/wp-admin/admin-ajax.php', ajax_data, function (data) {
-      $(rateHolderp).html(data)
-    })
-    return false
-  }
-}
-
-function show_date_time () {
-  BirthDay = new Date('06/02/2017 18:00:00')
-  today = new Date()
-  timeold = (today.getTime() - BirthDay.getTime())
-  sectimeold = timeold / 1000
-  secondsold = Math.floor(sectimeold)
-  msPerDay = 24 * 60 * 60 * 1000
-  e_daysold = timeold / msPerDay
-  daysold = Math.floor(e_daysold)
-  monitorday.innerHTML = daysold
-}
-try {
-  show_date_time()
-} catch (e) {}
-POWERMODE.colorful = true
-POWERMODE.shake = false
-document.body.addEventListener('input', POWERMODE)
-
 function motionSwitch (ele) {
   var motionEles = ['.bili', '.menhera', '.tieba']
   for (var i in motionEles) {
@@ -982,7 +851,6 @@ function get_poem (poem_ele, info_ele) {
   var info = document.querySelector(info_ele)
   var xhr = new XMLHttpRequest()
   xhr.open('get', 'https://v2.jinrishici.com/one.json')
-  xhr.withCredentials = true
   xhr.onreadystatechange = function () {
     if (xhr.readyState === 4) {
       var data = JSON.parse(xhr.responseText)
@@ -1022,7 +890,7 @@ function hearthstone_deck_iframe () {
     })
   }
 }
-var currentFontIsUbuntu = true
+// changeFont / convertChinese 已移除（未使用）
 
 // function changeFont() {
 //     if (currentFontIsUbuntu) {
@@ -1060,11 +928,11 @@ var home = location.href,
     },
     TOC: function () {
       var $tocMenuItem = $('#menu-new li').has('a[href="#toc"], a[href$="#toc"]');
-      if ($('.toc').length > 0 && document.body.clientWidth > 1200) {
+      if ($('.toc').length > 0 && document.body.clientWidth > 1024) {
         // Show TOC menu item: remove parent nav hide class first
         $tocMenuItem.closest('nav').removeClass('hide').addClass('navbar');
         $tocMenuItem.show();
-      } else if ($('.entry-content').length > 0 && document.body.clientWidth > 1200) {
+      } else if ($('.entry-content').length > 0 && document.body.clientWidth > 1024) {
         $tocMenuItem.closest('nav').removeClass('hide').addClass('navbar');
         $tocMenuItem.show();
       } else {
@@ -1072,13 +940,7 @@ var home = location.href,
       }
     },
     AB: function () {
-      if (window.location.pathname.indexOf('about') > -1) {
-        $.getScript('/js/botui.js', function () {
-          if (typeof(botui) == undefined && !botui.message) {
-            bot_ui_ini()
-          }
-        })
-      }
+      // botui.js 已通过 footer.ejs 加载，无需重复加载
     },
     VA: function () {
       if (document.getElementById('utterances-container') && mashiro_option.utterances_repo) {
@@ -1331,145 +1193,26 @@ var home = location.href,
         return false
       })
     }, XCS: function () {
-      var __cancel = jQuery('#cancel-comment-reply-link'),
-        __cancel_text = __cancel.text(),
-        __list = 'commentwrap'
-      jQuery(document).on('submit', '#commentform', function () {
-        jQuery.ajax({
-          url: Poi.ajaxurl,
-          data: jQuery(this).serialize() + '&action=ajax_comment',
-          type: jQuery(this).attr('method'),
-          beforeSend: addComment.createButterbar('提交中(Commiting)....'),
-          error: function (request) {
-            var t = addComment
-            t.createButterbar(request.responseText)
-          }, success: function (data) {
-            jQuery('textarea').each(function () {
-                this.value = ''
-              })
-            var t = addComment,
-                cancel = t.I('cancel-comment-reply-link'),
-                temp = t.I('wp-temp-form-div'),
-                respond = t.I(t.respondId),
-                post = t.I('comment_post_ID').value,
-                parent = t.I('comment_parent').value
-            if (parent != '0') {
-                jQuery('#respond').before('<ol class="children">' + data + '</ol>')
-              } else if (!jQuery('.' + __list).length) {
-                  if (Poi.formpostion == 'bottom') {
-                    jQuery('#respond').before('<ol class="' + __list + '">' + data + '</ol>')
-                  } else {
-                    jQuery('#respond').after('<ol class="' + __list + '">' + data + '</ol>')
-                  }
-                } else {
-                  if (Poi.order == 'asc') {
-                    jQuery('.' + __list).append(data)
-                  } else {
-                    jQuery('.' + __list).prepend(data)
-                  }
-                }
-            t.createButterbar('提交成功(Succeed)')
-            lazyload()
-            code_highlight_style()
-            click_to_view_image()
-            clean_upload_images()
-            cancel.style.display = 'none'
-            cancel.onclick = null
-            t.I('comment_parent').value = '0'
-            if (temp && respond) {
-                temp.parentNode.insertBefore(respond, temp)
-                temp.parentNode.removeChild(temp)
-              }
-          }
-        })
-        return false
-      })
+      // WordPress 评论系统已移除（Hexo 使用 Utterances）
+      // 保留 addComment.createButterbar 用于全局通知
       addComment = {
-        moveForm: function (commId, parentId, respondId) {
-          var t = this,
-            div, comm = t.I(commId),
-            respond = t.I(respondId),
-            cancel = t.I('cancel-comment-reply-link'),
-            parent = t.I('comment_parent'),
-            post = t.I('comment_post_ID')
-          __cancel.text(__cancel_text)
-          t.respondId = respondId
-          if (!t.I('wp-temp-form-div')) {
-            div = document.createElement('div')
-            div.id = 'wp-temp-form-div'
-            div.style.display = 'none'
-            respond.parentNode.insertBefore(div, respond)
-          }!comm ? (temp = t.I('wp-temp-form-div'), t.I('comment_parent').value = '0', temp.parentNode.insertBefore(respond, temp), temp.parentNode.removeChild(temp)) : comm.parentNode.insertBefore(respond, comm.nextSibling)
-          jQuery('body').animate({
-            scrollTop: jQuery('#respond').offset().top - 180
-          }, 400)
-          parent.value = parentId
-          cancel.style.display = ''
-          cancel.onclick = function () {
-            var t = addComment,
-              temp = t.I('wp-temp-form-div'),
-              respond = t.I(t.respondId)
-            t.I('comment_parent').value = '0'
-            if (temp && respond) {
-              temp.parentNode.insertBefore(respond, temp)
-              temp.parentNode.removeChild(temp)
-            }
-            this.style.display = 'none'
-            this.onclick = null
-            return false
-          }
-          try {
-            t.I('comment').focus()
-          } catch (e) {}
-          return false
-        }, I: function (e) {
+        I: function (e) {
           return document.getElementById(e)
-        }, clearButterbar: function (e) {
+        }, clearButterbar: function () {
           if (jQuery('.butterBar').length > 0) {
-              jQuery('.butterBar').remove()
-            }
-        }, createButterbar: function (message, showtime) {
-            var t = this
-            t.clearButterbar()
-            jQuery('body').append('<div class="butterBar butterBar--center"><p class="butterBar-message">' + message + '</p></div>')
-            if (showtime > 0) {
-                setTimeout("jQuery('.butterBar').remove()", showtime)
-              } else {
-                setTimeout("jQuery('.butterBar').remove()", 6000)
-              }
+            jQuery('.butterBar').remove()
           }
+        }, createButterbar: function (message, showtime) {
+          var t = this
+          t.clearButterbar()
+          jQuery('body').append('<div class="butterBar butterBar--center"><p class="butterBar-message">' + message + '</p></div>')
+          setTimeout("jQuery('.butterBar').remove()", showtime || 6000)
+        }
       }
     }, XCP: function () {
-      $body = (window.opera) ? (document.compatMode == 'CSS1Compat' ? $('html') : $('body')) : $('html,body')
-      $('body').on('click', '#comments-navi a', function (e) {
-        e.preventDefault()
-        $.ajax({
-          type: 'GET',
-          url: $(this).attr('href'),
-          beforeSend: function () {
-            $('#comments-navi').remove()
-            $('ul.commentwrap').remove()
-            $('#loading-comments').slideDown()
-            $body.animate({
-                scrollTop: $('#comments-list-title').offset().top - 65
-              }, 800)
-          }, dataType: 'html',
-          success: function (out) {
-            result = $(out).find('ul.commentwrap')
-            nextlink = $(out).find('#comments-navi')
-            $('#loading-comments').slideUp('fast')
-            $('#loading-comments').after(result.fadeIn(500))
-            $('ul.commentwrap').after(nextlink)
-            lazyload()
-            code_highlight_style()
-            click_to_view_image()
-          }
-        })
-      })
+      // WordPress 评论分页已移除
     }, IA: function () {
-      POWERMODE.colorful = true
-      POWERMODE.shake = false
-      document.body.addEventListener('input', POWERMODE)
+      // POWERMODE 输入特效已移除（未定义）
     }, GT: function () {
       var offset = 100,
         offset_opacity = 1200,
@@ -1539,13 +1282,6 @@ $(function () {
       if (Poi.codelamp == 'open') {
         self.Prism.highlightAll(event)
       };
-      if ($('.ds-thread').length > 0) {
-        if (typeof DUOSHUO !== 'undefined') {
-          DUOSHUO.EmbedThread('.ds-thread')
-        } else {
-          $.getScript('//static.duoshuo.com/embed.js')
-        }
-      }
     }).on('submit', '.search-form,.s-search', function (event) {
       event.preventDefault()
       $.pjax.submit(event, '#page', {
@@ -1572,27 +1308,10 @@ $(function () {
       timeSeriesReload(true)
     }, false)
   }
-  $.fn.postLike = function () {
-    if ($(this).hasClass('done')) {
-      return false
-    } else {
-      $(this).addClass('done')
-      var id = $(this).data('id'),
-        action = $(this).data('action'),
-        rateHolder = $(this).children('.count')
-      var ajax_data = {
-        action: 'specs_zan',
-        um_id: id,
-        um_action: action
-      }
-      $.post(Poi.ajaxurl, ajax_data, function (data) {
-        $(rateHolder).html(data)
-      })
-      return false
-    }
-  }
+  // 文章点赞功能已移除（WordPress AJAX 已废弃）
   $(document).on('click', '.specsZan', function () {
-    $(this).postLike()
+    // Hexo 不支持 AJAX 点赞
+    return false
   })
   console.log('%c Mashiro %c', 'background:#24272A; color:#ffffff', '', 'https://2heng.xin/')
   console.log('%c hojun %c', 'background:#24272A; color:#ffffff', '', 'https://www.hojun.cn/')

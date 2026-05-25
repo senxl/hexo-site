@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
   
-  <title itemprop="name">Tag: 流水灯 | 咏晴小柳</title>
+  <title itemprop="name">STM32 用寄存器点灯代码 | 咏晴小柳</title>
 
   
     <link rel="shortcut icon" href="/senxl/images/favicon.ico">
@@ -324,64 +324,164 @@
   </div>
 </header>
 
-      
+      <link rel="stylesheet" type="text/css" href="/senxl/css/sharejs.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.css">
+
+
+
 <div class="pattern-center-blank"></div>
-<div class="pattern-center ">
-  <div class="pattern-attachment-img">
-    <img src="https://cdn.jsdelivr.net/gh/senxl/hexo-cdn/img/loader/orange.progress-bar-stripe-loader.svg" data-src="流水灯.img" class="lazyload" onerror="imgError(this,3)" style="width: 100%; height: 100%; object-fit: cover; pointer-events: none;">
+
+
+  <div class="pattern-center single-center">
+    <div class="pattern-attachment-img lazyload" style="background-image: url(https://cdn.jsdelivr.net/gh/senxl/hexo-cdn/img/posts/stm32/cover.jpg);" src="https://cdn.jsdelivr.net/gh/senxl/hexo-cdn/img/loader/orange.progress-bar-stripe-loader.svg" data-src="https://cdn.jsdelivr.net/gh/senxl/hexo-cdn/img/posts/stm32/cover.jpg">
+    </div>
+    <header class="pattern-header single-header">
+      <h1 class="entry-title">STM32 用寄存器点灯代码</h1>
+      <p class="entry-census">
+        <span>
+          <a href="senxl.github.io/senxl">
+            <img src="https://cdn.jsdelivr.net/gh/senxl/hexo-cdn/img/custom/avatar.jpg" alt="咏晴小柳">
+          </a>
+        </span>
+        <span>
+          <a href="senxl.github.io/senxl">咏晴小柳</a>
+        </span>
+        <span class="bull">·</span>
+        2020-10-6
+        <span class="bull">·</span>
+        <span id="busuanzi_value_page_pv"></span>次阅读
+      </p>
+    </header>
   </div>
-  <header class="pattern-header ">
-    <h1 class="cat-title">流水灯</h1>
-  </header>
-</div>
+
+
 <div id="content" class="site-content">
   <div id="primary" class="content-area">
     <main id="main" class="site-main" role="main">
-      
-  <!-- 首页默认取最最新文章集 -->
-  
-    <article class="post post-list" itemscope="" itemtype="https://schema.org/BlogPosting">
-  <div class="post-entry">
-    <div class="feature">
-      <a href="/senxl/2020/10/06/stm32-register-led-blink/">
-        <div class="overlay">
-          <i class="iconfont icon-text">
-          </i>
+      <article class="post-article">
+        <div class="toc"></div>
+
+        
+
+        <div class="entry-content">
+          <h2 id="小小寄存器，秃头大秘密"><a href="#小小寄存器，秃头大秘密" class="headerlink" title="小小寄存器，秃头大秘密"></a>小小寄存器，秃头大秘密</h2><p>前提准备：</p>
+<ol>
+<li>软件 Keil5</li>
+<li>正点原子 Mini STM32F103RCT6 开发板</li>
+</ol>
+<span id="more"></span>
+
+<p>主要程序代码奉上：</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;stm32f10x.h&quot;</span></span></span><br><span class="line"><span class="type">void</span> <span class="title function_">delay</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">int</span> i=<span class="number">2000000</span>;</span><br><span class="line">    <span class="keyword">while</span>(i--);</span><br><span class="line">&#125;</span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">// PA8 的 LED0 初始</span></span><br><span class="line">    <span class="comment">// 打开 PA 端口时钟</span></span><br><span class="line">    *(<span class="type">unsigned</span> <span class="type">int</span> *)<span class="number">0x40021018</span> |= (<span class="number">1</span>&lt;&lt;<span class="number">2</span>);</span><br><span class="line">    <span class="comment">// IO CRL 输出设置 (PA8 属于高寄存器)</span></span><br><span class="line">    *(<span class="type">unsigned</span> <span class="type">int</span> *)<span class="number">0x40010804</span> |= (<span class="number">1</span>&lt;&lt;(<span class="number">4</span>*<span class="number">0</span>));</span><br><span class="line">    <span class="comment">// ODR 寄存器控制</span></span><br><span class="line">    *(<span class="type">unsigned</span> <span class="type">int</span> *)<span class="number">0x4001080C</span> |= (<span class="number">1</span>&lt;&lt;<span class="number">8</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// PD2 的 LED1 初始</span></span><br><span class="line">    <span class="comment">// 打开 PD 端口时钟</span></span><br><span class="line">    *(<span class="type">unsigned</span> <span class="type">int</span> *)<span class="number">0x40021018</span> |= (<span class="number">1</span>&lt;&lt;<span class="number">5</span>);</span><br><span class="line">    <span class="comment">// IO CRL 输出设置 (PD2 属于低寄存器)</span></span><br><span class="line">    *(<span class="type">unsigned</span> <span class="type">int</span> *)<span class="number">0x40011400</span> |= (<span class="number">1</span>&lt;&lt;(<span class="number">4</span>*<span class="number">2</span>));</span><br><span class="line">    <span class="comment">// ODR 寄存器控制</span></span><br><span class="line">    *(<span class="type">unsigned</span> <span class="type">int</span> *)<span class="number">0x4001140C</span> |= (<span class="number">1</span>&lt;&lt;<span class="number">2</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span>(<span class="number">1</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">// 利用寄存器实现流水灯效果</span></span><br><span class="line">        *(<span class="type">unsigned</span> <span class="type">int</span> *)<span class="number">0x4001080C</span> &amp;= ~(<span class="number">1</span>&lt;&lt;<span class="number">8</span>);</span><br><span class="line">        *(<span class="type">unsigned</span> <span class="type">int</span> *)<span class="number">0x4001140C</span> |= (<span class="number">1</span>&lt;&lt;<span class="number">2</span>);</span><br><span class="line">        delay();</span><br><span class="line">        *(<span class="type">unsigned</span> <span class="type">int</span> *)<span class="number">0x4001140C</span> &amp;= ~(<span class="number">1</span>&lt;&lt;<span class="number">2</span>);</span><br><span class="line">        *(<span class="type">unsigned</span> <span class="type">int</span> *)<span class="number">0x4001080C</span> |= (<span class="number">1</span>&lt;&lt;<span class="number">8</span>);</span><br><span class="line">        delay();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>以上代码实现了<strong>两个 LED 灯依次闪烁</strong>的效果。</p>
+<h2 id="工程图"><a href="#工程图" class="headerlink" title="工程图"></a>工程图</h2><ul>
+<li><code>startup_stm32f10x_hd.s</code> 是启动文件，可在正点官方资料包复制过来</li>
+<li><code>stm32f10x.h</code> 文件为空，自己添加即可</li>
+</ul>
+<p><img src="https://cdn.jsdelivr.net/gh/senxl/hexo-cdn/img/posts/stm32/QQ%E6%88%AA%E5%9B%BE20201006203440.jpg" alt="工程示意图1"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/senxl/hexo-cdn/img/posts/stm32/QQ%E6%88%AA%E5%9B%BE20201006203543.jpg" alt="工程示意图2"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/senxl/hexo-cdn/img/posts/stm32/QQ%E6%88%AA%E5%9B%BE20201006203600.jpg" alt="工程示意图3"></p>
+
         </div>
-        <img width="150" height="150" src="https://cdn.jsdelivr.net/gh/senxl/hexo-cdn/img/posts/stm32/cover.jpg" class="attachment-post-thumbnail size-post-thumbnail wp-post-image" alt="" >
-      </a>
-    </div>
-    <h1 class="entry-title">
-    <a href="/senxl/2020/10/06/stm32-register-led-blink/">
-    STM32 用寄存器点灯代码</a>
-    </h1>
-    <div class="p-time">
-      <i class="iconfont icon-time">
-      </i>
-    2020-10-6</div>
-    <p>
-    学习 STM32 的第一个程序——用寄存器控制 LED 流水灯</p>
-    <footer class="entry-footer">
-      <div class="post-more">
-        <a href="/senxl/2020/10/06/stm32-register-led-blink/">
-          <i class="iconfont icon-caidan">
-          </i>
-        </a>
-      </div>
-    </footer>
-  </div>
-  <hr>
-</article>
-  
+
+        <!-- 赞赏 -->
+        <div class="single-reward">
+          <div class="reward-open">赏
+            <div class="reward-main">
+              <ul class="reward-row">
+                <li class="alipay-code"><img src="https://cdn.jsdelivr.net/gh/senxl/hexo-cdn/img/custom/donate/AliPayQR.jpg"></li>
+                <li class="wechat-code"><img src="https://cdn.jsdelivr.net/gh/senxl/hexo-cdn/img/custom/donate/WeChanQR.jpg"></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- 分享 -->
+        <div class="social-share share-mobile" data-disabled="diandian, tencent"></div>
+
+        <!-- 文章底部 -->
+        <footer class="post-footer">
+          <div class="post-lincenses">
+            <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" target="_blank" rel="nofollow">
+              <i class="fa fa-creative-commons" aria-hidden="true"></i> 知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议
+            </a>
+          </div>
+          <div class="post-tags"></div>
+          <div class="post-share">
+            <div class="social-share sharehidden share-component"></div>
+            <i class="iconfont show-share icon-forward"></i>
+          </div>
+        </footer>
+
+        
+        <div class="article-pv" style="text-align: center; padding: 20px 0; color: #999; font-size: 14px; border-top: 1px dashed #eee; margin-top: 15px;">
+          📖 本文已被阅读 <span id="busuanzi_value_page_pv_bottom" style="color: #fe9600; font-weight: bold;"></span> 次
+        </div>
+        
+      </article>
+
+      <!-- 上下篇导航 -->
+      <section class="post-squares nextprev">
+        
+          <div class="post-nepre half previous">
+            <a href="/senxl/2020/11/18/cmake-compile-cpp-on-linux/" rel="prev">
+              <div class="background">
+                <img class="lazyload" src="https://cdn.jsdelivr.net/gh/senxl/hexo-cdn/img/loader/orange.progress-bar-stripe-loader.svg" data-src="https://cdn.jsdelivr.net/gh/senxl/hexo-cdn/img/posts/cmake/cover.jpg" onerror="imgError(this,3)">
+              </div>
+              <span class="label">Previous Post</span>
+              <div class="info">
+                <h3>CMake 在 Linux 下编译 C++ 程序</h3>
+                <hr>
+              </div>
+            </a>
+          </div>
+        
+        
+          <div class="post-nepre half next">
+            <a href="/senxl/2020/09/12/blog-setup/" rel="next">
+              <div class="background">
+                <img class="lazyload" src="https://cdn.jsdelivr.net/gh/senxl/hexo-cdn/img/loader/orange.progress-bar-stripe-loader.svg" data-src="https://cdn.jsdelivr.net/gh/senxl/hexo-cdn/img/posts/first/cover.jpg" onerror="imgError(this,3)">
+              </div>
+              <span class="label">Next Post</span>
+              <div class="info">
+                <h3>博客启用</h3>
+                <hr>
+              </div>
+            </a>
+          </div>
+        
+      </section>
+
+      <!-- 评论 -->
+      
+<div id="utterances-container"></div>
+<noscript>请启用 JavaScript 以查看评论。</noscript>
 
 
-      <div class="clearer">
-      </div>
+
+      <!-- 作者信息 -->
+      <section class="author-profile">
+        <div class="info" itemprop="author" itemscope="" itemtype="https://schema.org/Person">
+          <a href="senxl.github.io/senxl" class="profile gravatar">
+            <img src="https://cdn.jsdelivr.net/gh/senxl/hexo-cdn/img/custom/avatar.jpg" itemprop="image" alt="咏晴小柳" height="70" width="70">
+          </a>
+          <div class="meta">
+            <span class="title">Author</span>
+            <h3 itemprop="name">
+              <a href="senxl.github.io/senxl" itemprop="url" rel="author">咏晴小柳</a>
+            </h3>
+          </div>
+        </div>
+        <hr>
+        <p><i class="iconfont icon-write"></i>梦里回迁梦绕，明月轮回天明。</p>
+      </section>
     </main>
-    <!--  -->
-    
   </div>
 </div>
+
+
+
     </div>    
     <div class="ins-search">
     <div class="ins-search-mask"></div>

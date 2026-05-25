@@ -41,6 +41,6 @@ function toggleArchiveSidebar() {
 })();
 
 // 打开主页时确保页面在最顶部
-if (window.location.pathname === '/' || window.location.pathname === '/hexo-site/' || window.location.pathname === '/hexo-site') {
+if (window.location.pathname === '/' || window.location.pathname === '/senxl/' || window.location.pathname === '/senxl') {
   window.scrollTo(0, 0);
 }

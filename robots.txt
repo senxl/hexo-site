@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://senxl.github.io/senxl/sitemap.xml

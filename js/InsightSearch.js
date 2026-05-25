@@ -15,9 +15,14 @@
             .append($('<header>').addClass('ins-section-header').text(title));
     }
 
+    function escapeHtml (str) {
+        if (!str) return '';
+        return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    }
+
     function searchItem (icon, title, slug, preview, url) {
         return $('<div>').addClass('ins-selectable').addClass('ins-search-item')
-            .append($('<header>').append($('<i>').addClass('fa').addClass('fa-' + icon)).append(title != null && title != '' ? title : CONFIG.TRANSLATION['UNTITLED'])
+            .append($('<header>').append($('<i>').addClass('fa').addClass('fa-' + icon)).append(title != null && title != '' ? escapeHtml(title) : CONFIG.TRANSLATION['UNTITLED'])
                 .append(slug ? $('<span>').addClass('ins-slug').text(slug) : null))
             .append(preview ? $('<p>').addClass('ins-search-preview').text(preview) : null)
             .attr('data-url', url);
