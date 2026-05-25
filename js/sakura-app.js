@@ -1052,7 +1052,11 @@ var home = location.href,
   s = $('#bgvideo')[0],
   Siren = {
     BSZ: function() {
-      $.getScript('//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js')
+      if (typeof busuanzi !== 'undefined') {
+        busuanzi.fetch();
+      } else {
+        $.getScript('//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js');
+      }
     },
     TOC: function () {
       var $tocMenuItem = $('#menu-new li').has('a[href="#toc"], a[href$="#toc"]');

@@ -297,6 +297,36 @@ i.iconfont.js-toggle-search.iconsearch:hover,
   .archive-sidebar { width: 85vw !important; }
 }
 
+/* ===== 访问统计 (不蒜子) ===== */
+.busuanzi-stats {
+  border-top: 1px dashed #eee;
+  margin-top: 10px;
+  padding: 10px 0;
+  text-align: center;
+  font-size: 13px;
+  color: #999;
+}
+.busuanzi-stats span {
+  display: inline-block;
+}
+.busuanzi-stats #busuanzi_value_site_uv,
+.busuanzi-stats #busuanzi_value_site_pv {
+  color: #fe9600;
+  font-weight: bold;
+}
+.article-pv {
+  border-top: 1px dashed #eee;
+  margin-top: 15px;
+  padding: 20px 0;
+  text-align: center;
+  font-size: 14px;
+  color: #999;
+}
+.article-pv #busuanzi_value_page_pv_bottom {
+  color: #fe9600;
+  font-weight: bold;
+}
+
 /* ===== APlayer 歌词 ===== */
 .aplayer .aplayer-lrc { height: 35px; }
 .aplayer .aplayer-lrc p { font-size: 16px; font-weight: 700; line-height: 18px !important; }
