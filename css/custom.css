@@ -1,0 +1,307 @@
+/* ============================================================
+   custom.css — 自定义样式（从 head.ejs 内联提取）
+   维护者修改此文件，不要在 head.ejs 中写内联 style
+   ============================================================ */
+
+/* ===== 代码高亮 ===== */
+.hljs-ln { border-collapse: collapse; }
+.hljs-ln td { padding: 0; }
+.hljs-ln-n:before { content: attr(data-line-number); }
+.highlight .gutter { display: none !important; }
+.highlight .code { padding-left: 0 !important; }
+
+/* ===== 主题色 ===== */
+.author-profile i,
+.post-like a,
+.post-share .show-share,
+.sub-text,
+.we-info a,
+span.sitename,
+.post-more i:hover,
+#pagination a:hover,
+.post-content a:hover,
+.float-content i:hover { color: #FE9600; }
+
+.feature i,
+.download,
+.navigator i:hover,
+.links ul li:before,
+.ar-time i,
+span.ar-circle,
+.object,
+.comment .comment-reply-link,
+.siren-checkbox-radio:checked + .siren-checkbox-radioInput:after { background: #FE9600; }
+
+::-webkit-scrollbar-thumb { background: #FE9600; }
+
+.download,
+.navigator i:hover,
+.link-title,
+.links ul li:hover,
+#pagination a:hover,
+.comment-respond input[type='submit']:hover { border-color: #FE9600; }
+
+.entry-content a:hover,
+.site-info a:hover,
+.comment h4 a,
+#comments-navi a.prev,
+#comments-navi a.next,
+.comment h4 a:hover,
+.site-top ul li a:hover,
+.entry-title a:hover,
+#archives-temp h3,
+span.page-numbers.current,
+.sorry li a:hover,
+.site-title a:hover,
+i.iconfont.js-toggle-search.iconsearch:hover,
+.comment-respond input[type='submit']:hover { color: #FE9600; }
+
+.comments .comments-main { display: block !important; }
+.comments .comments-hidden { display: none !important; }
+
+/* ===== Hitokoto Hero Section ===== */
+.hitokoto-hero {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  padding: 20px;
+}
+
+/* 一言区域 */
+.hitokoto-section {
+  margin-bottom: 30px;
+  text-align: center;
+  max-width: 680px;
+}
+.hitokoto-text {
+  font-size: 22px;
+  color: #fff;
+  line-height: 1.8;
+  letter-spacing: 2px;
+  text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+  transition: opacity 0.3s ease;
+  font-family: 'Noto Serif SC', 'Georgia', serif;
+}
+.hitokoto-text::before { content: '\300C'; font-size: 28px; opacity: 0.6; }
+.hitokoto-text::after  { content: '\300D'; font-size: 28px; opacity: 0.6; }
+.hitokoto-from {
+  font-size: 14px;
+  color: rgba(255,255,255,0.7);
+  margin-top: 10px;
+  letter-spacing: 1px;
+  transition: opacity 0.3s ease;
+}
+
+/* 头像与站点 */
+.hero-profile { text-align: center; margin-bottom: 25px; }
+.hero-profile .header-tou { margin: 0 auto 15px; }
+.hero-profile .header-tou img {
+  width: 90px; height: 90px;
+  border-radius: 50%;
+  border: 3px solid rgba(255,255,255,0.8);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+  transition: transform 0.3s ease;
+}
+.hero-profile .header-tou img:hover { transform: scale(1.1) rotate(360deg); }
+.hero-title {
+  font-size: 26px; color: #fff; font-weight: 600;
+  letter-spacing: 3px;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.3);
+  margin: 0 0 8px;
+}
+.hero-desc {
+  font-size: 15px; color: rgba(255,255,255,0.8);
+  letter-spacing: 1px;
+  text-shadow: 0 1px 4px rgba(0,0,0,0.2);
+  margin: 0;
+}
+
+/* 社交图标 */
+.hero-social { display: flex; gap: 15px; margin-bottom: 30px; }
+.hero-social .social-link {
+  display: flex; align-items: center; justify-content: center;
+  width: 40px; height: 40px; border-radius: 50%;
+  background: rgba(255,255,255,0.15);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255,255,255,0.2);
+  transition: all 0.3s ease;
+}
+.hero-social .social-link:hover {
+  background: rgba(255,255,255,0.3);
+  transform: translateY(-3px);
+  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+.hero-social .social-link img { width: 22px; height: 22px; }
+
+/* 导航按钮 */
+.hero-nav { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
+.hero-nav-btn {
+  display: flex; align-items: center; gap: 6px;
+  padding: 8px 18px; border-radius: 25px;
+  background: rgba(255,255,255,0.12);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255,255,255,0.2);
+  color: #fff; font-size: 14px; text-decoration: none;
+  transition: all 0.3s ease; letter-spacing: 1px;
+}
+.hero-nav-btn:hover {
+  background: rgba(255,255,255,0.25);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+.hero-nav-btn i { font-size: 13px; }
+
+/* 隐藏旧的 focusinfo */
+.focusinfo { display: none !important; }
+
+/* ===== 公告栏 ===== */
+.notice {
+  border-radius: 12px;
+  backdrop-filter: blur(10px);
+  background: rgba(255,255,255,0.75);
+  border: 1px solid rgba(255,255,255,0.3);
+  box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.notice:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+}
+.notice-content { font-size: 15px; letter-spacing: 0.5px; }
+
+/* ===== 文章列表 ===== */
+.main-title { font-size: 24px !important; padding: 15px 0; color: #555; }
+.main-title i { margin-right: 8px; color: #FE9600; }
+.fes-title { font-size: 22px !important; color: #555; }
+.fes-title i { margin-right: 8px; color: #FE9600; }
+.post-list-thumb {
+  border-radius: 12px; overflow: hidden;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.post-list-thumb:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+}
+.post-content { padding: 15px 20px; }
+.post-content .post-title h3 { font-size: 20px; font-weight: 600; color: #333; margin: 8px 0; }
+.post-content .post-meta { font-size: 13px; color: #999; }
+.post-content .float-content p { font-size: 14px; color: #666; line-height: 1.6; }
+
+/* ===== 汉堡按钮 ===== */
+.archive-hamburger {
+  position: fixed; top: 20px; left: 20px; z-index: 9999;
+  width: 44px; height: 44px; border-radius: 50%;
+  background: rgba(255,255,255,0.85);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255,255,255,0.4);
+  box-shadow: 0 2px 12px rgba(0,0,0,0.1);
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  opacity: 0; transform: translateX(-60px);
+  transition: opacity 0.4s ease, transform 0.4s ease, background 0.2s, box-shadow 0.2s;
+  pointer-events: none;
+}
+.archive-hamburger.visible { opacity: 1; transform: translateX(0); pointer-events: auto; }
+.archive-hamburger:hover { background: rgba(254,150,0,0.9); box-shadow: 0 4px 18px rgba(254,150,0,0.3); }
+.archive-hamburger:hover i { color: #fff; }
+.archive-hamburger i { font-size: 20px; color: #555; transition: color 0.2s; }
+
+/* ===== 遮罩层 ===== */
+.archive-overlay {
+  position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.4); z-index: 9998;
+  opacity: 0; pointer-events: none;
+  transition: opacity 0.35s ease;
+}
+.archive-overlay.show { opacity: 1; pointer-events: auto; }
+
+/* ===== 归档侧边栏 ===== */
+.archive-sidebar {
+  position: fixed; top: 0; left: 0;
+  width: 320px; height: 100vh;
+  background: rgba(255,255,255,0.95);
+  backdrop-filter: blur(15px);
+  z-index: 10000;
+  transform: translateX(-100%);
+  transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex; flex-direction: column;
+  box-shadow: 4px 0 25px rgba(0,0,0,0.08);
+}
+.archive-sidebar.open { transform: translateX(0); }
+.archive-sidebar-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 18px 20px;
+  border-bottom: 2px solid #FE9600;
+  flex-shrink: 0;
+}
+.archive-sidebar-header h3 {
+  font-size: 17px; font-weight: 600; color: #333;
+  margin: 0; letter-spacing: 1px;
+}
+.archive-sidebar-header h3 i { margin-right: 8px; color: #FE9600; }
+.archive-close {
+  font-size: 26px; color: #999; cursor: pointer;
+  line-height: 1; transition: color 0.2s;
+}
+.archive-close:hover { color: #FE9600; }
+.archive-sidebar-body {
+  flex: 1; overflow-y: auto; padding: 15px 20px;
+}
+.archive-sidebar-body::-webkit-scrollbar { width: 4px; }
+.archive-sidebar-body::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.12); border-radius: 2px; }
+
+/* 年份树 */
+.archive-year { margin-bottom: 5px; }
+.year-label {
+  display: flex; align-items: center; gap: 8px;
+  font-size: 15px; font-weight: 600; color: #333;
+  padding: 8px 0; cursor: pointer; user-select: none;
+  transition: color 0.2s; margin: 0;
+}
+.year-label:hover { color: #FE9600; }
+.year-arrow { font-size: 11px; transition: transform 0.3s; color: #999; }
+.archive-year.collapsed .year-arrow { transform: rotate(-90deg); }
+.archive-year.collapsed .archive-list { display: none; }
+.year-count {
+  margin-left: auto; font-size: 12px; color: #999;
+  background: #f5f5f5; padding: 1px 8px; border-radius: 10px; font-weight: 400;
+}
+.archive-list { list-style: none; padding: 0 0 0 5px; margin: 0; }
+.archive-list li {
+  display: flex; align-items: baseline; gap: 8px;
+  padding: 5px 0; border-left: 2px solid #eee; padding-left: 12px;
+  transition: border-color 0.2s;
+}
+.archive-list li:hover { border-color: #FE9600; }
+.archive-date { font-size: 12px; color: #aaa; font-family: 'Source Code Pro', monospace; flex-shrink: 0; }
+.archive-link {
+  font-size: 13px; color: #555; text-decoration: none;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  transition: color 0.2s;
+}
+.archive-link:hover { color: #FE9600; }
+
+/* ===== 响应式 ===== */
+@media (max-width: 768px) {
+  .hitokoto-text { font-size: 17px; line-height: 1.7; }
+  .hero-title { font-size: 22px; }
+  .hero-nav { gap: 8px; }
+  .hero-nav-btn { padding: 6px 14px; font-size: 13px; }
+  .hero-social { gap: 10px; }
+  .hero-social .social-link { width: 36px; height: 36px; }
+  .archive-sidebar { width: 85vw !important; }
+}
+
+/* ===== APlayer 歌词 ===== */
+.aplayer .aplayer-lrc { height: 35px; }
+.aplayer .aplayer-lrc p { font-size: 16px; font-weight: 700; line-height: 18px !important; }
+.aplayer .aplayer-lrc p.aplayer-lrc-current { color: #FF1493; }
+.aplayer.aplayer-narrow .aplayer-body { left: -66px !important; }
+.aplayer.aplayer-fixed .aplayer-lrc { display: none; }
+.aplayer .aplayer-lrc.aplayer-lrc-hide { display: none !important; }
+.aplayer.aplayer-fixed .lrc-show { display: block; background: rgba(255, 255, 255, 0.8); }
